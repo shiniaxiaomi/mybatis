@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mybatis.dao.UserMapper" >
+    <resultMap id="BaseResultMap" type="com.mybatis.entity.User" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="age" property="age" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, name, age
+    </sql>
+
+    <!-- 不使用对象 -->
+    <!-- 如果在外面的接口中使用@Param注解指定了参数之后,这里就可以不指定参数,直接使用 -->
+    <insert id="addUser3">
+        insert into user (name,age) values(#{name},#{age})
+    </insert>
+
+    <select id="getUserById3" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where id = #{id}
+    </select>
+
+    <delete id="deleteUserById3">
+        delete from user where id=#{id}
+    </delete>
+
+    <update id="updateUserById3">
+        update user set name=#{name},age=#{age} where id=#{id}
+    </update>
+
+    <!-- 使用对象 -->
+    <insert id="addUser4">
+        insert into user (name,age) values(#{name},#{age})
+    </insert>
+
+    <update id="updateUserById4">
+        update user set name=#{name},age=#{age} where id=#{id}
+    </update>
+
+
+
+</mapper>
