@@ -2,7 +2,10 @@ package com.mybatis.dao;
 
 import com.mybatis.entity.User;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface UserMapper {
@@ -22,6 +25,7 @@ public interface UserMapper {
 
     //注解版----使用对象
     @Insert("insert into user (name,age) values(#{name},#{age})")//如果是自增主键则不用管id
+    @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id") //数据插入成功后，id值被反填到user对象中，调用getId()就可以获取
     int addUser2(User user);
 
     @Update("update user set name=#{name},age=#{age} where id=#{id}")
@@ -40,4 +44,9 @@ public interface UserMapper {
     int addUser4(User user);
 
     void updateUserById4(User user);
+
+    //分页---注解
+    @Select("SELECT * FROM USER")
+    List<User> getUsersByIdByPage(RowBounds rowBounds);//传入分页的信息rowBounds
+
 }

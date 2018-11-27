@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Created by Yingjie.Lu on 2018/11/26.
  */
@@ -19,7 +21,10 @@ public class MybatisController {
     //注解版----不使用对象
     @RequestMapping("/addUser")
     public void addUser(String name,int age){
-        userService.addUser(name,age);
+        int id=0;
+        int flag=userService.addUser(name,age);
+        System.out.println(flag);
+        System.out.println(id);
     }
 
     @RequestMapping("/getUserById")
@@ -41,6 +46,7 @@ public class MybatisController {
     @RequestMapping("/addUser2")
     public void addUser2(User user){
         userService.addUser2(user);
+        System.out.println(user.getId());
     }
 
     @RequestMapping("/updateUserById2")
@@ -78,6 +84,12 @@ public class MybatisController {
     @RequestMapping("/updateUserById4")
     public void updateUserById4(User user){
         userService.updateUserById4(user);
+    }
+
+    //分页---注解
+    @RequestMapping("/getUsersByIdByPage")
+    public List<User> getUsersByIdByPage(int offset,int limit){
+        return userService.getUsersByIdByPage(offset,limit);
     }
 
 

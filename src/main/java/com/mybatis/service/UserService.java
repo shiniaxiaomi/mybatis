@@ -2,8 +2,11 @@ package com.mybatis.service;
 
 import com.mybatis.dao.UserMapper;
 import com.mybatis.entity.User;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -13,8 +16,8 @@ public class UserService {
 
 
     //注解版----不使用对象
-    public void addUser(String name,int age) {
-        userMapper.addUser(name,age);
+    public int addUser(String name,int age) {
+        return userMapper.addUser(name,age);
     }
 
     public User getUserById(Integer id){
@@ -32,6 +35,7 @@ public class UserService {
     //注解版----使用对象
     public void addUser2(User user){
         userMapper.addUser2(user);
+//        System.out.println(user.getId());
     }
 
     public void updateUserById2(User user) {
@@ -62,5 +66,12 @@ public class UserService {
 
     public void updateUserById4(User user) {
         userMapper.updateUserById4(user);
+    }
+
+    //分页---注解
+    public List<User> getUsersByIdByPage(int offset,int limit) {
+        RowBounds rowBounds=new RowBounds(offset,limit);
+        List<User> list = userMapper.getUsersByIdByPage(rowBounds);
+        return list;
     }
 }
